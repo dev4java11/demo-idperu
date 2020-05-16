@@ -1,0 +1,39 @@
+server:
+  port: 8020
+  servlet:
+    context-path: /demo
+    
+spring:
+  application:
+    name: demo
+    
+  security:
+    oauth2:
+      client:
+        registration:
+          idpre:
+            client-name: IDPeru
+            client-id: client_id
+            client-secret: client_secret
+            provider: idpre
+            authorization-grant-type: authorization_code
+            client-authentication-method: post
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope:
+            - openid
+            - profile
+            - email
+            - phone
+            - offline_access
+        provider:
+          idpre:
+            authorization-uri: https://idp-pre.reniec.gob.pe/service/auth
+            token-uri: https://idp-pre.reniec.gob.pe/service/token
+            jwk-set-uri: https://idp-pre.reniec.gob.pe/service/keys/keys.jwk
+            user-info-uri: https://idp-pre.reniec.gob.pe/service/userinfo
+            user-name-attribute: doc
+            
+logging:
+  level:
+    org.springframework.security.oauth2: info
+    org.springframework.web.client: debug
